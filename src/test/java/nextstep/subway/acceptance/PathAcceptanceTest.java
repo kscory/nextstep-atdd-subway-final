@@ -1,11 +1,57 @@
 package nextstep.subway.acceptance;
 
 import nextstep.subway.setup.BaseTestSetup;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static nextstep.subway.acceptance.step.LineStep.*;
+import static nextstep.subway.acceptance.step.LineStepExtractor.노선_추출기;
+import static nextstep.subway.acceptance.step.StationStep.*;
+import static nextstep.subway.acceptance.step.StationStepExtractor.역_추출기;
+
 @DisplayName("지하철 경로 검색 인수 테스트")
 class PathAcceptanceTest extends BaseTestSetup {
+    private Long 시청역_id;
+    private Long 서울역_id;
+
+    private Long 을지로입구역_id;
+    private Long 을지로3가역_id;
+
+    private Long 회현역_id;
+    private Long 명동역_id;
+    private Long 충무로역_id;
+
+    /**
+     *           *2호선*
+     * 시청역 --- 을지로입구역 --- 을지로3가역
+     *  |                         \
+     *  | *1호선*                   \ *3호선*
+     *  |                           \
+     * 서울역 --- 회현역 --- 명동역 --- 충무로역
+     *              *4호선*
+     */
+    @BeforeEach
+    public void setUp() {
+        시청역_id = 역_추출기.단일_id_를_추출한다(시청역을_생성한다());
+        서울역_id = 역_추출기.단일_id_를_추출한다(서울역을_생성한다());
+        을지로입구역_id = 역_추출기.단일_id_를_추출한다(을지로입구역을_생성한다());
+        을지로3가역_id = 역_추출기.단일_id_를_추출한다(을지로3가역을_생성한다());
+        회현역_id = 역_추출기.단일_id_를_추출한다(회현역을_생성한다());
+        명동역_id = 역_추출기.단일_id_를_추출한다(명동역을_생성한다());
+        충무로역_id = 역_추출기.단일_id_를_추출한다(충무로역을_생성한다());
+
+        일호선을_생성한다(시청역_id, 서울역_id, 10L);
+
+        Long 이호선_id = 노선_추출기.단일_id_를_추출한다(이호선을_생성한다(시청역_id, 을지로입구역_id, 10L));
+        구간을_추가한다(이호선_id, 을지로입구역_id, 을지로3가역_id, 10L);
+
+        삼호선을_생성한다(을지로3가역_id, 충무로역_id, 10L);
+
+        Long 사호선_id = 노선_추출기.단일_id_를_추출한다(사호선을_생성한다(서울역_id, 회현역_id, 10L));
+        구간을_추가한다(사호선_id, 회현역_id, 명동역_id, 10L);
+        구간을_추가한다(사호선_id, 명동역_id, 충무로역_id, 10L);
+    }
 
     /**
      * Given: 지하철 노선 및 구간들이 등록되어 있고
