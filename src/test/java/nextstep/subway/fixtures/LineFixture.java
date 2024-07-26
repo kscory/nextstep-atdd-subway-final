@@ -2,6 +2,7 @@ package nextstep.subway.fixtures;
 
 import nextstep.subway.domain.entity.line.Line;
 import nextstep.subway.domain.entity.line.LineSections;
+import org.springframework.data.util.Pair;
 
 import java.util.UUID;
 
@@ -12,13 +13,13 @@ public class LineFixture {
         return line;
     }
 
-    public static Line prepareLineOne(Long... stationIds) {
+    @SafeVarargs
+    public static Line prepareLineOne(Pair<Long, Long>... upDownStationIds) {
         Line line = new Line("1호선", "#0052A4", new LineSections());
 
-        for (long i = 0; i<stationIds.length-1; i++) {
-            line.addSection(stationIds[(int) i], stationIds[(int) i+1], 10L);
+        for (Pair<Long, Long> upDownStation : upDownStationIds) {
+            line.addSection(upDownStation.getFirst(), upDownStation.getSecond(), 10L);
         }
         return line;
     }
-
 }
