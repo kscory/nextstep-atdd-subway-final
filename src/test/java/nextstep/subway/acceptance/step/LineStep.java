@@ -25,6 +25,10 @@ public class LineStep {
         return 노선을_생성한다(new CreateLineRequest("4호선", "#00A4E3", upStationId, downStationId, distance));
     }
 
+    public static ExtractableResponse<Response> 분당선을_생성한다(Long upStationId, Long downStationId, Long distance) {
+        return 노선을_생성한다(new CreateLineRequest("분당선", "#F5A200", upStationId, downStationId, distance));
+    }
+
     public static ExtractableResponse<Response> 노선을_생성한다(CreateLineRequest request) {
         return RestAssured
                 .given().log().all()

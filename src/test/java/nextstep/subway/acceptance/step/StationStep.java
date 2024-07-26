@@ -33,10 +33,6 @@ public class StationStep {
         return 역을_생성한다("을지로3가역");
     }
 
-    public static ExtractableResponse<Response> 을지로4가역을_생성한다() {
-        return 역을_생성한다("을지로4가역");
-    }
-
     public static ExtractableResponse<Response> 회현역을_생성한다() {
         return 역을_생성한다("회현역");
     }
@@ -56,6 +52,14 @@ public class StationStep {
 
     public static ExtractableResponse<Response> 잠실역을_생성한다() {
         return 역을_생성한다("잠실역");
+    }
+
+    public static ExtractableResponse<Response> 선릉역을_생성한다() {
+        return 역을_생성한다("선릉역");
+    }
+
+    public static ExtractableResponse<Response> 한티역을_생성한다() {
+        return 역을_생성한다("한티역");
     }
 
     public static ExtractableResponse<Response> 역을_생성한다(String name) {

@@ -111,7 +111,16 @@ class PathAcceptanceTest extends BaseTestSetup {
      */
     @Test
     void 출발역과_도착역이_연결되지_않은_경로_조회시_오류_발생_테스트() {
+        // given
+        Long 선릉역_id = 역_추출기.단일_id_를_추출한다(선릉역을_생성한다());
+        Long 한티역_id = 역_추출기.단일_id_를_추출한다(한티역을_생성한다());
+        분당선을_생성한다(선릉역_id, 한티역_id, 10L);
 
+        // when
+        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 선릉역_id);
+
+        // then
+        응답_상태값이_올바른지_검증한다(경로_조회_응답값, HttpStatus.BAD_REQUEST.value());
     }
 
     /**
