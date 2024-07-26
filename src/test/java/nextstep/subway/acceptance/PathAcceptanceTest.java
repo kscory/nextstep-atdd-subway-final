@@ -97,7 +97,11 @@ class PathAcceptanceTest extends BaseTestSetup {
      */
     @Test
     void 출발역과_도착역이_동일한경우_경로_조회시_오류_발생_테스트() {
+        // when
+        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 시청역_id);
 
+        // then
+        응답_상태값이_올바른지_검증한다(경로_조회_응답값, HttpStatus.BAD_REQUEST.value());
     }
 
     /**

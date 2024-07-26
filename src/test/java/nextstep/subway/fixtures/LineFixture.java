@@ -2,9 +2,9 @@ package nextstep.subway.fixtures;
 
 import nextstep.subway.domain.entity.line.Line;
 import nextstep.subway.domain.entity.line.LineSections;
-import org.springframework.data.util.Pair;
 
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 public class LineFixture {
     public static Line prepareRandom(Long upStationId, Long downStationId) {
@@ -13,13 +13,11 @@ public class LineFixture {
         return line;
     }
 
-    @SafeVarargs
-    public static Line prepareLineOne(Pair<Long, Long>... upDownStationIds) {
-        Line line = new Line("1호선", "#0052A4", new LineSections());
-
-        for (Pair<Long, Long> upDownStation : upDownStationIds) {
-            line.addSection(upDownStation.getFirst(), upDownStation.getSecond(), 10L);
-        }
+    public static Line prepareConnectedLine(Long... upDownStationIds) {
+        Line line = new Line(UUID.randomUUID().toString(), UUID.randomUUID().toString(), new LineSections());
+        IntStream
+                .range(0, upDownStationIds.length-1)
+                .forEach((i) -> line.addSection(upDownStationIds[i], upDownStationIds[i+1], 10L));
         return line;
     }
 }
