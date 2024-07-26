@@ -197,7 +197,7 @@ public class LineTest {
             SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.deleteSection(999L));
 
             // then
-            assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.INVALID_STATION);
+            assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.NOT_FOUND_STATION_ON_LINE);
         }
 
         @Test

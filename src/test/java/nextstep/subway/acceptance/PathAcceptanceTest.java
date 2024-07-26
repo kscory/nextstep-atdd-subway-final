@@ -4,9 +4,12 @@ import nextstep.subway.setup.BaseTestSetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 
+import static nextstep.subway.acceptance.step.BaseStepAsserter.응답_상태값이_올바른지_검증한다;
 import static nextstep.subway.acceptance.step.LineStep.*;
 import static nextstep.subway.acceptance.step.LineStepExtractor.노선_추출기;
+import static nextstep.subway.acceptance.step.PathStep.경로를_조회한다;
 import static nextstep.subway.acceptance.step.StationStep.*;
 import static nextstep.subway.acceptance.step.StationStepExtractor.역_추출기;
 
@@ -60,7 +63,14 @@ class PathAcceptanceTest extends BaseTestSetup {
      */
     @Test
     void 등록되어_있지_않은_출발역의_경로_조회시_오류_발생_테스트() {
+        // given
+        Long 삼성역_id = 2222L;
 
+        // when
+        var 경로_조회_응답값 = 경로를_조회한다(삼성역_id, 시청역_id);
+
+        // then
+        응답_상태값이_올바른지_검증한다(경로_조회_응답값, HttpStatus.NOT_FOUND.value());
     }
 
     /**
@@ -70,7 +80,14 @@ class PathAcceptanceTest extends BaseTestSetup {
      */
     @Test
     void 등록되어_있지_않은_도착역의_경로_조회시_오류_발생_테스트() {
+        // given
+        Long 삼성역_id = 2222L;
 
+        // when
+        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 삼성역_id);
+
+        // then
+        응답_상태값이_올바른지_검증한다(경로_조회_응답값, HttpStatus.NOT_FOUND.value());
     }
 
     /**

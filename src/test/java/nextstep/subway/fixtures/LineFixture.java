@@ -16,8 +16,9 @@ public class LineFixture {
         Line line = new Line("1호선", "#0052A4", new LineSections());
 
         for (long i = 0; i<stationIds.length-1; i++) {
-            line.addSection(i, i+1, 10L);
+            line.addSection(stationIds[(int) i], stationIds[(int) i+1], 10L);
         }
         return line;
     }
+
 }
