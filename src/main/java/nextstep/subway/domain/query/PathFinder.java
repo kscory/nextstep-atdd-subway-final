@@ -1,11 +1,19 @@
 package nextstep.subway.domain.query;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import nextstep.subway.domain.entity.line.Line;
 import nextstep.subway.domain.entity.station.Station;
-import nextstep.subway.domain.view.PathView;
 
 import java.util.List;
 
 public interface PathFinder {
-    PathView.Main find(List<Line> lines, Station source, Station target);
+    PathResult find(List<Line> lines, Station source, Station target);
+
+    @Getter
+    @AllArgsConstructor
+    class PathResult {
+        private List<Long> stationIds;
+        private Long distance;
+    }
 }

@@ -6,11 +6,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+
 import static nextstep.subway.acceptance.step.BaseStepAsserter.응답_상태값이_올바른지_검증한다;
 import static nextstep.subway.acceptance.step.LineStep.*;
 import static nextstep.subway.acceptance.step.LineStepExtractor.노선_추출기;
 import static nextstep.subway.acceptance.step.PathStep.경로를_조회한다;
+import static nextstep.subway.acceptance.step.PathStepAsserter.거리가_최소값인지_검증한다;
+import static nextstep.subway.acceptance.step.PathStepExtractor.경로_추출기;
 import static nextstep.subway.acceptance.step.StationStep.*;
+import static nextstep.subway.acceptance.step.StationStepAsserter.역_목록에_지정된_역들이_순서대로_포함되는지_검증한다;
 import static nextstep.subway.acceptance.step.StationStepExtractor.역_추출기;
 
 @DisplayName("지하철 경로 검색 인수 테스트")
@@ -130,6 +135,18 @@ class PathAcceptanceTest extends BaseTestSetup {
      */
     @Test
     void 경로_조회_테스트() {
+        // when
+        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 충무로역_id);
 
+        // then
+        응답_상태값이_올바른지_검증한다(경로_조회_응답값, HttpStatus.OK.value());
+
+        // then
+        List<String> 모든_역_이름 = 경로_추출기.경로의_역_이름들을_추출한다(경로_조회_응답값);
+        역_목록에_지정된_역들이_순서대로_포함되는지_검증한다(모든_역_이름, "시청역" , "을지로입구역" , "을지로3가역" , "충무로역");
+
+        // then
+        Long 거리 = 경로_추출기.경로의_거리를_추출한다(경로_조회_응답값);
+        거리가_최소값인지_검증한다(거리, 30L);
     }
 }

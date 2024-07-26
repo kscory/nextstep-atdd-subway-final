@@ -6,7 +6,6 @@ import nextstep.subway.domain.entity.station.Station;
 import nextstep.subway.domain.exception.SubwayDomainException;
 import nextstep.subway.domain.exception.SubwayDomainExceptionType;
 import nextstep.subway.domain.query.PathFinder;
-import nextstep.subway.domain.view.PathView;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -18,21 +17,20 @@ import java.util.List;
 @Component
 public class JgraphtPathFinder implements PathFinder {
     @Override
-    public PathView.Main find(List<Line> lines, Station source, Station target) {
+    public PathResult find(List<Line> lines, Station source, Station target) {
         verifySameStation(source, target);
-        WeightedMultigraph<Long, DefaultWeightedEdge> graph = initGraph(lines);
 
-        verifyStationExisted(graph, source);
-        verifyStationExisted(graph, target);
+        WeightedMultigraph<Long, DefaultWeightedEdge> graph = initGraph(lines, source, target);
 
-        findShortestPath(graph, source, target);
+        GraphPath<Long, DefaultWeightedEdge> shortestPath = findShortestPath(graph, source, target);
 
-        return null;
+        return new PathResult(shortestPath.getVertexList(), (long) shortestPath.getWeight());
     }
 
-    private WeightedMultigraph<Long, DefaultWeightedEdge> initGraph(List<Line> lines) {
+    private WeightedMultigraph<Long, DefaultWeightedEdge> initGraph(List<Line> lines, Station source, Station target) {
         WeightedMultigraph<Long, DefaultWeightedEdge> graph = new WeightedMultigraph<>(DefaultWeightedEdge.class);
         lines.forEach((line) -> addEdges(graph, line.getSections()));
+        verifyStationExistedInGraph(graph, source, target);
         return graph;
     }
 
@@ -63,8 +61,12 @@ public class JgraphtPathFinder implements PathFinder {
         }
     }
 
-    private void verifyStationExisted(WeightedMultigraph<Long, DefaultWeightedEdge> graph, Station station) {
-        if (!graph.containsVertex(station.getId())) {
+    private void verifyStationExistedInGraph(WeightedMultigraph<Long, DefaultWeightedEdge> graph, Station source, Station target) {
+        if (!graph.containsVertex(source.getId())) {
+            throw new SubwayDomainException(SubwayDomainExceptionType.NOT_FOUND_STATION);
+        }
+
+        if (!graph.containsVertex(target.getId())) {
             throw new SubwayDomainException(SubwayDomainExceptionType.NOT_FOUND_STATION);
         }
     }
