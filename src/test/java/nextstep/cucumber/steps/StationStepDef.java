@@ -34,9 +34,9 @@ public class StationStepDef implements En {
             });
         });
 
-        When("지하철역을 생성하면", () -> {
+        When("{string} 을 생성하면", (String station) -> {
             Map<String, String> params = new HashMap<>();
-            params.put("name", "강남역");
+            params.put("name", station);
             response = RestAssured.given().log().all()
                     .body(params)
                     .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -50,13 +50,12 @@ public class StationStepDef implements En {
             assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         });
 
-        Then("지하철역 목록 조회 시 생성한 역을 찾을 수 있다", () -> {
-            List<String> stationNames =
-                    RestAssured.given().log().all()
+        Then("지하철역 목록 조회 시 {string} 을 찾을 수 있다", (String station) -> {
+            List<String> stationNames = RestAssured.given().log().all()
                             .when().get("/stations")
                             .then().log().all()
                             .extract().jsonPath().getList("name", String.class);
-            assertThat(stationNames).containsAnyOf("강남역");
+            assertThat(stationNames).containsAnyOf(station);
         });
     }
 
