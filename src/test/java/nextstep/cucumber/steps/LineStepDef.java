@@ -32,8 +32,7 @@ public class LineStepDef implements En {
                         cucumberStore.stationIdMap.get(entry.get("upStation")),
                         cucumberStore.stationIdMap.get(entry.get("downStation")),
                         Long.parseLong(entry.get("distance")),
-                        // Todo 수정 필요
-                        22L
+                        Long.parseLong(entry.get("duration"))
                 );
                 ExtractableResponse<Response> lineResponse = 노선을_생성한다(request);
                 cucumberStore.lineIdMap.put(lineName, lineResponse.jsonPath().getLong("id"));
@@ -47,7 +46,8 @@ public class LineStepDef implements En {
                     cucumberStore.lineIdMap.get(entry.get("line")),
                     cucumberStore.stationIdMap.get(entry.get("upStation")),
                     cucumberStore.stationIdMap.get(entry.get("downStation")),
-                    Long.parseLong(entry.get("distance"))
+                    Long.parseLong(entry.get("distance")),
+                    Long.parseLong(entry.get("duration"))
             ));
         });
     }

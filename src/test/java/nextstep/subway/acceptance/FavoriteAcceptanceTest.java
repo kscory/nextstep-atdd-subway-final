@@ -51,7 +51,7 @@ public class FavoriteAcceptanceTest extends BaseTestSetup {
         삼호선을_생성한다(을지로3가역_id, 충무로역_id, 10L, 10L);
         var 이호선_id = 노선_추출기.단일_id_를_추출한다(이호선을_생성한다(시청역_id, 을지로입구역_id, 10L, 10L));
 
-        구간을_추가한다(이호선_id, 을지로입구역_id, 을지로3가역_id, 10L);
+        구간을_추가한다(이호선_id, 을지로입구역_id, 을지로3가역_id, 10L, 10L);
 
         회원_생성_요청(EMAIL, PASSWORD, AGE);
         인증토큰 = 인증토큰을_추출한다(이메일_패스워드_로그인(EMAIL, PASSWORD));

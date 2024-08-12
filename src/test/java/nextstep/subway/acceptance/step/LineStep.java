@@ -81,13 +81,12 @@ public class LineStep {
             Long id,
             Long upStationId,
             Long downStationId,
-            Long distance
-//            Long duration
+            Long distance,
+            Long duration
     ) {
         return RestAssured
                 .given().log().all()
-                // Todo duration 수정 필요
-                .body(new AddSectionRequest(upStationId, downStationId, distance, 22L))
+                .body(new AddSectionRequest(upStationId, downStationId, distance, duration))
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when().post("/lines/" + id + "/sections")
                 .then().log().all()

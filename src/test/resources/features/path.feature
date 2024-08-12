@@ -18,16 +18,16 @@ Feature: 지하철 경로 검색
       | 명동역    |
       | 충무로역   |
     And 노선들을 생성하고
-      | name | color   | upStation | downStation | distance |
-      | 일호선  | #0052A4 | 시청역       | 서울역         | 10       |
-      | 이호선  | #00A84D | 시청역       | 을지로입구역      | 10       |
-      | 삼호선  | #EF7C1C | 을지로3가역    | 충무로역        | 10       |
-      | 사호선  | #00A4E3 | 서울역       | 회현역         | 10       |
+      | name | color   | upStation | downStation | distance | duration |
+      | 일호선  | #0052A4 | 시청역       | 서울역         | 10       | 10       |
+      | 이호선  | #00A84D | 시청역       | 을지로입구역      | 10       | 10       |
+      | 삼호선  | #EF7C1C | 을지로3가역    | 충무로역        | 10       | 10       |
+      | 사호선  | #00A4E3 | 서울역       | 회현역         | 10       | 10       |
     And 구간들을 추가하고
-      | line | upStation | downStation | distance |
-      | 이호선  | 을지로입구역    | 을지로3가역      | 10       |
-      | 사호선  | 회현역       | 명동역         | 10       |
-      | 사호선  | 명동역       | 충무로역        | 10       |
+      | line | upStation | downStation | distance | duration |
+      | 이호선  | 을지로입구역    | 을지로3가역      | 10       | 10       |
+      | 사호선  | 회현역       | 명동역         | 10       | 10       |
+      | 사호선  | 명동역       | 충무로역        | 10       | 10       |
 
   Scenario: 두 역의 최단 거리 경로를 조회힌다.
     When "시청역"과 "충무로역" 사이의 최단 거리 경로를 조회하면

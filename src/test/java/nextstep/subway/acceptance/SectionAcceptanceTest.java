@@ -36,7 +36,7 @@ public class SectionAcceptanceTest extends BaseTestSetup {
         Long 구로역_id = 역_추출기.단일_id_를_추출한다(구로역을_생성한다());
 
         // when
-        var 구간_추가_응답값 = 구간을_추가한다(일호선_id, 서울역_id, 구로역_id, 10L);
+        var 구간_추가_응답값 = 구간을_추가한다(일호선_id, 서울역_id, 구로역_id, 10L, 10L);
 
         // then
         응답_상태값이_올바른지_검증한다(구간_추가_응답값, HttpStatus.BAD_REQUEST.value());
@@ -57,7 +57,7 @@ public class SectionAcceptanceTest extends BaseTestSetup {
         );
 
         // when
-        var 구간_추가_응답값 = 구간을_추가한다(일호선_id, 용산역_id, 시청역_id, 10L);
+        var 구간_추가_응답값 = 구간을_추가한다(일호선_id, 용산역_id, 시청역_id, 10L, 10L);
 
         // then
         응답_상태값이_올바른지_검증한다(구간_추가_응답값, HttpStatus.BAD_REQUEST.value());
@@ -80,7 +80,7 @@ public class SectionAcceptanceTest extends BaseTestSetup {
         Long 구로역_id = 역_추출기.단일_id_를_추출한다(구로역을_생성한다());
 
         // when
-        var 구간_추가_응답값 = 구간을_추가한다(일호선_id, 용산역_id, 구로역_id, 10L);
+        var 구간_추가_응답값 = 구간을_추가한다(일호선_id, 용산역_id, 구로역_id, 10L, 10L);
 
         // then
         응답_상태값이_올바른지_검증한다(구간_추가_응답값, HttpStatus.CREATED.value());
@@ -107,7 +107,7 @@ public class SectionAcceptanceTest extends BaseTestSetup {
         Long 시청역_id = 역_추출기.단일_id_를_추출한다(시청역을_생성한다());
 
         // when
-        var 구간_추가_응답값 = 구간을_추가한다(일호선_id, 시청역_id, 서울역_id, 10L);
+        var 구간_추가_응답값 = 구간을_추가한다(일호선_id, 시청역_id, 서울역_id, 10L, 10L);
 
         // then
         응답_상태값이_올바른지_검증한다(구간_추가_응답값, HttpStatus.CREATED.value());
@@ -136,8 +136,8 @@ public class SectionAcceptanceTest extends BaseTestSetup {
         Long 용산역_id = 역_추출기.단일_id_를_추출한다(용산역을_생성한다());
 
         // when
-        구간을_추가한다(일호선_id, 시청역_id, 서울역_id, 3L);
-        var 구간_추가_응답값 = 구간을_추가한다(일호선_id, 서울역_id, 용산역_id, 5L);
+        구간을_추가한다(일호선_id, 시청역_id, 서울역_id, 3L, 10L);
+        var 구간_추가_응답값 = 구간을_추가한다(일호선_id, 서울역_id, 용산역_id, 5L, 10L);
 
         // then
         응답_상태값이_올바른지_검증한다(구간_추가_응답값, HttpStatus.CREATED.value());
@@ -182,7 +182,7 @@ public class SectionAcceptanceTest extends BaseTestSetup {
         Long 일호선_id = 노선_추출기.단일_id_를_추출한다(
                 노선을_생성한다(일호선_생성_요청값을_생성한다(시청역_id, 용산역_id))
         );
-        구간을_추가한다(일호선_id, 용산역_id, 구로역_id, 10L);
+        구간을_추가한다(일호선_id, 용산역_id, 구로역_id, 10L, 10L);
 
         Long 서울역_id = 역_추출기.단일_id_를_추출한다(서울역을_생성한다());
 
@@ -208,7 +208,7 @@ public class SectionAcceptanceTest extends BaseTestSetup {
         );
 
         Long 구로역_id = 역_추출기.단일_id_를_추출한다(구로역을_생성한다());
-        구간을_추가한다(일호선_id, 용산역_id, 구로역_id, 10L);
+        구간을_추가한다(일호선_id, 용산역_id, 구로역_id, 10L, 10L);
 
         // when
         var 구간삭제_응답값 = 구간을_삭제한다(일호선_id, 시청역_id);
@@ -236,7 +236,7 @@ public class SectionAcceptanceTest extends BaseTestSetup {
         );
 
         Long 구로역_id = 역_추출기.단일_id_를_추출한다(구로역을_생성한다());
-        구간을_추가한다(일호선_id, 용산역_id, 구로역_id, 10L);
+        구간을_추가한다(일호선_id, 용산역_id, 구로역_id, 10L, 10L);
 
         // when
         var 구간삭제_응답값 = 구간을_삭제한다(일호선_id, 용산역_id);
@@ -265,7 +265,7 @@ public class SectionAcceptanceTest extends BaseTestSetup {
         );
 
         Long 구로역_id = 역_추출기.단일_id_를_추출한다(구로역을_생성한다());
-        구간을_추가한다(일호선_id, 용산역_id, 구로역_id, 10L);
+        구간을_추가한다(일호선_id, 용산역_id, 구로역_id, 10L, 10L);
 
         // when
         var 구간삭제_응답값 = 구간을_삭제한다(일호선_id, 구로역_id);
