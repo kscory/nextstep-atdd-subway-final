@@ -28,15 +28,24 @@ public class LineSection {
     private Long distance;
 
     @Column(nullable = false)
+    private Long duration;
+
+    @Column(nullable = false)
     private Long position;
 
     protected LineSection() {}
 
     public LineSection(Line line, Long upStationId, Long downStationId, Long distance) {
+        // Todo 수정 필요
+        this(line, upStationId, downStationId, distance, 0L);
+    }
+
+    public LineSection(Line line, Long upStationId, Long downStationId, Long distance, Long duration) {
         this.line = line;
         this.upStationId = upStationId;
         this.downStationId = downStationId;
         this.distance = distance;
+        this.duration = duration;
         this.position = 0L;
     }
 

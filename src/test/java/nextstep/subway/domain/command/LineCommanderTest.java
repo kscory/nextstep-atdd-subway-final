@@ -103,7 +103,8 @@ public class LineCommanderTest extends BaseTestSetup {
                         () -> assertThat(actual.getSections().size()).isEqualTo(1),
                         () -> assertThat(actual.getSections().getLastSection().getUpStationId()).isEqualTo(command.getUpStationId()),
                         () -> assertThat(actual.getSections().getLastSection().getDownStationId()).isEqualTo(command.getDownStationId()),
-                        () -> assertThat(actual.getSections().getLastSection().getDistance()).isEqualTo(command.getDistance())
+                        () -> assertThat(actual.getSections().getLastSection().getDistance()).isEqualTo(command.getDistance()),
+                        () -> assertThat(actual.getSections().getLastSection().getDuration()).isEqualTo(command.getDuration())
                 );
                 return null;
             });
@@ -179,7 +180,8 @@ public class LineCommanderTest extends BaseTestSetup {
                     1728321378313L,
                     upDownStation.get(0).getId(),
                     upDownStation.get(1).getId(),
-                    20L
+                    20L,
+                    10L
             );
 
             // when
@@ -198,7 +200,8 @@ public class LineCommanderTest extends BaseTestSetup {
                     line.getId(),
                     17238123L,
                     stations.get(1).getId(),
-                    20L
+                    20L,
+                    10L
             );
 
             // when
@@ -217,7 +220,8 @@ public class LineCommanderTest extends BaseTestSetup {
                     line.getId(),
                     stations.get(0).getId(),
                     12783L,
-                    20L
+                    20L,
+                    10L
             );
 
             // when
@@ -236,7 +240,8 @@ public class LineCommanderTest extends BaseTestSetup {
                     line.getId(),
                     stations.get(0).getId(),
                     stations.get(1).getId(),
-                    20L
+                    20L,
+                    10L
             );
 
             // when
@@ -264,7 +269,8 @@ public class LineCommanderTest extends BaseTestSetup {
                     line.getId(),
                     stations.get(1).getId(),
                     stations.get(2).getId(),
-                    20L
+                    20L,
+                    10L
             );
 
             // when
@@ -292,7 +298,8 @@ public class LineCommanderTest extends BaseTestSetup {
                     line.getId(),
                     stations.get(0).getId(),
                     stations.get(1).getId(),
-                    8L
+                    8L,
+                    10L
             );
 
             // when

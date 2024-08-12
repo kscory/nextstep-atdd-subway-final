@@ -14,8 +14,9 @@ public class CreateLineRequest {
     private Long upStationId;
     private Long downStationId;
     private Long distance;
+    private Long duration;
 
     public LineCommand.CreateLine toCommand() {
-        return new LineCommand.CreateLine(name, color, upStationId, downStationId, distance);
+        return new LineCommand.CreateLine(name, color, upStationId, downStationId, distance, duration);
     }
 }

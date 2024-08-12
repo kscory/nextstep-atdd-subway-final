@@ -12,8 +12,9 @@ public class AddSectionRequest {
     private Long upStationId;
     private Long downStationId;
     private Long distance;
+    private Long duration;
 
     public LineCommand.AddSection toCommand(Long id) {
-        return new LineCommand.AddSection(id, upStationId, downStationId, distance);
+        return new LineCommand.AddSection(id, upStationId, downStationId, distance, duration);
     }
 }

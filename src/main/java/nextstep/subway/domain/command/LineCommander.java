@@ -37,7 +37,7 @@ public class LineCommander {
     public void addSection(LineCommand.AddSection command) {
         Line line = lineRepository.findByIdOrThrow(command.getLineId());
         verifyStationExist(command.getUpStationId(), command.getDownStationId());
-        line.addSection(command.getUpStationId(), command.getDownStationId(), command.getDistance());
+        line.addSection(command.getUpStationId(), command.getDownStationId(), command.getDistance(), command.getDuration());
         lineRepository.save(line);
     }
 

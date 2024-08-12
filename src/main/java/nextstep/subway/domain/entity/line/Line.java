@@ -34,7 +34,7 @@ public class Line {
 
     public static Line init(LineCommand.CreateLine command) {
         Line line = new Line(command.getName(), command.getColor(), new LineSections());
-        line.addSection(command.getUpStationId(), command.getDownStationId(), command.getDistance());
+        line.addSection(command.getUpStationId(), command.getDownStationId(), command.getDistance(), command.getDuration());
         return line;
     }
 
@@ -43,8 +43,8 @@ public class Line {
         this.color = command.getColor();
     }
 
-    public void addSection(Long upStationId, Long downStationId, Long distance) {
-        sections.addSection(new LineSection(this, upStationId, downStationId, distance));
+    public void addSection(Long upStationId, Long downStationId, Long distance, Long duration) {
+        sections.addSection(new LineSection(this, upStationId, downStationId, distance, duration));
     }
 
     public void deleteSection(Long stationId) {

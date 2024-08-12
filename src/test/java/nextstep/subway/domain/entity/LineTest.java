@@ -37,7 +37,8 @@ public class LineTest {
                     () -> assertThat(actual.getSections().size()).isEqualTo(1),
                     () -> assertThat(actual.getSections().getLastSection().getUpStationId()).isEqualTo(command.getUpStationId()),
                     () -> assertThat(actual.getSections().getLastSection().getDownStationId()).isEqualTo(command.getDownStationId()),
-                    () -> assertThat(actual.getSections().getLastSection().getDistance()).isEqualTo(command.getDistance())
+                    () -> assertThat(actual.getSections().getLastSection().getDistance()).isEqualTo(command.getDistance()),
+                    () -> assertThat(actual.getSections().getLastSection().getDuration()).isEqualTo(command.getDuration())
             );
         }
     }
@@ -67,7 +68,7 @@ public class LineTest {
             Line sut = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L);
 
             // when
-            SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.addSection(5L, 7L, 5L));
+            SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.addSection(5L, 7L, 5L, 10L));
 
             // then
             assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.INVALID_STATION);
@@ -79,7 +80,7 @@ public class LineTest {
             Line sut = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L);
 
             // when
-            SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.addSection(4L, 3L, 5L));
+            SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.addSection(4L, 3L, 5L, 10L));
 
             // then
             assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.INVALID_STATION);
@@ -91,7 +92,7 @@ public class LineTest {
             Line sut = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L);
 
             // when
-            SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.addSection(3L, 1L, 5L));
+            SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.addSection(3L, 1L, 5L, 10L));
 
             // then
             assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.INVALID_STATION);
@@ -103,7 +104,7 @@ public class LineTest {
             Line sut = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L);
 
             // when
-            SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.addSection(2L, 9L, 11L));
+            SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.addSection(2L, 9L, 11L, 10L));
 
             // then
             assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.INVALID_SECTION_DISTANCE);
@@ -115,7 +116,7 @@ public class LineTest {
             Line sut = new Line("11", "cc", new LineSections());
 
             // when
-            sut.addSection(1L, 2L, 10L);
+            sut.addSection(1L, 2L, 10L, 10L);
 
             // then
             assertThat(sut.getSections().size()).isEqualTo(1);
@@ -127,7 +128,7 @@ public class LineTest {
             Line sut = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L);
 
             // when
-            sut.addSection(99L, 1L, 10L);
+            sut.addSection(99L, 1L, 10L, 10L);
 
             // then
             assertThat(sut.getSections().getAllStationIds()).isEqualTo(List.of(99L, 1L, 2L, 3L, 4L));
@@ -140,7 +141,7 @@ public class LineTest {
             Line sut = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L);
 
             // when
-            sut.addSection(4L, 5L, 10L);
+            sut.addSection(4L, 5L, 10L, 10L);
 
             // then
             assertThat(sut.getSections().getAllStationIds()).isEqualTo(List.of(1L, 2L, 3L, 4L, 5L));
@@ -153,7 +154,7 @@ public class LineTest {
             Line sut = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L);
 
             // when
-            sut.addSection(3L, 88L, 5L);
+            sut.addSection(3L, 88L, 5L, 10L);
 
             // then
             assertThat(sut.getSections().getAllStationIds()).isEqualTo(List.of(1L, 2L, 3L, 88L, 4L));
@@ -165,7 +166,7 @@ public class LineTest {
             Line sut = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L);
 
             // when
-            sut.addSection(1L, 88L, 4L);
+            sut.addSection(1L, 88L, 4L, 10L);
 
             // then
             assertThat(sut.getSections().get(0).getDistance()).isEqualTo(4L);

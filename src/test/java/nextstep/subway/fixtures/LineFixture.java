@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class LineFixture {
     public static Line prepareRandom(Long upStationId, Long downStationId) {
         Line line = new Line(UUID.randomUUID().toString(), UUID.randomUUID().toString(), new LineSections());
-        line.addSection(upStationId, downStationId, 10L);
+        line.addSection(upStationId, downStationId, 10L, 20L);
         return line;
     }
 
@@ -18,7 +18,7 @@ public class LineFixture {
         Line line = new Line(UUID.randomUUID().toString(), UUID.randomUUID().toString(), new LineSections());
         IntStream
                 .range(0, upDownStationIds.length-1)
-                .forEach((i) -> line.addSection(upDownStationIds[i], upDownStationIds[i+1], 10L));
+                .forEach((i) -> line.addSection(upDownStationIds[i], upDownStationIds[i+1], 10L, 20L));
         return line;
     }
 
@@ -26,7 +26,7 @@ public class LineFixture {
         Line line = new Line(UUID.randomUUID().toString(), UUID.randomUUID().toString(), new LineSections());
         IntStream
                 .range(0, upDownStations.length-1)
-                .forEach((i) -> line.addSection(upDownStations[i].getId(), upDownStations[i+1].getId(), 10L));
+                .forEach((i) -> line.addSection(upDownStations[i].getId(), upDownStations[i+1].getId(), 10L, 20L));
         return line;
     }
 }
