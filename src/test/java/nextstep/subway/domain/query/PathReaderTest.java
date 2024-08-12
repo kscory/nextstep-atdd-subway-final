@@ -59,8 +59,8 @@ public class PathReaderTest extends BaseTestSetup {
         // given
         List<Station> stations = stationDbUtil.insertStations("삼성역", "잠실역", "선릉역", "삼성역");
         Line line = lineDbUtil.insertLine(stations.get(0).getId(), stations.get(1).getId());
-        lineDbUtil.insertSection(line, stations.get(1).getId(), stations.get(2).getId(), 10L, 10L);
-        lineDbUtil.insertSection(line, stations.get(2).getId(), stations.get(3).getId(), 10L, 10L);
+        lineDbUtil.insertSection(line, stations.get(1).getId(), stations.get(2).getId(), 10L, 20L);
+        lineDbUtil.insertSection(line, stations.get(2).getId(), stations.get(3).getId(), 10L, 20L);
         PathQuery.Query query = new PathQuery.Query(stations.get(0).getId(), stations.get(2).getId(), PathQuery.Type.DISTANCE);
 
         // when
@@ -69,6 +69,7 @@ public class PathReaderTest extends BaseTestSetup {
         // then
         assertThat(actual.getStations().size()).isEqualTo(3);
         assertThat(actual.getDistance()).isEqualTo(20L);
+        assertThat(actual.getDuration()).isEqualTo(40L);
     }
 }
 

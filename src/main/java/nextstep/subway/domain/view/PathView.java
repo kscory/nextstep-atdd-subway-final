@@ -13,5 +13,6 @@ public class PathView {
     public static class Main {
         private List<StationView.Main> stations;
         private Long distance;
+        private Long duration;
     }
 }

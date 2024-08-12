@@ -33,7 +33,7 @@ public class PathReader {
                 .map((station -> new StationView.Main(station.getId(), station.getName())))
                 .collect(Collectors.toList());
 
-        return new PathView.Main(stations, pathResult.getDistance());
+        return new PathView.Main(stations, pathResult.getDistance(), pathResult.getDuration());
     }
 
 }
