@@ -35,11 +35,6 @@ public class LineSection {
 
     protected LineSection() {}
 
-    public LineSection(Line line, Long upStationId, Long downStationId, Long distance) {
-        // Todo 수정 필요
-        this(line, upStationId, downStationId, distance, 0L);
-    }
-
     public LineSection(Line line, Long upStationId, Long downStationId, Long distance, Long duration) {
         this.line = line;
         this.upStationId = upStationId;
@@ -53,14 +48,19 @@ public class LineSection {
         this.position = position;
     }
 
-    public List<LineSection> split(Long middleStationId, Long firstDistance) {
+    public List<LineSection> split(Long middleStationId, Long firstDistance, Long firstDuration) {
         long secondDistance = distance - firstDistance;
-        if (secondDistance < 0) {
+        if (secondDistance <= 0) {
             throw new SubwayDomainException(SubwayDomainExceptionType.INVALID_SECTION_DISTANCE);
         }
 
-        LineSection first = new LineSection(line, upStationId, middleStationId, firstDistance);
-        LineSection second = new LineSection(line, middleStationId, downStationId, secondDistance);
+        long secondDuration = duration - firstDuration;
+        if (secondDuration <= 0) {
+            throw new SubwayDomainException(SubwayDomainExceptionType.INVALID_SECTION_DURATION);
+        }
+
+        LineSection first = new LineSection(line, upStationId, middleStationId, firstDistance, firstDuration);
+        LineSection second = new LineSection(line, middleStationId, downStationId, secondDistance, secondDuration);
 
         return List.of(first, second);
     }
@@ -70,7 +70,8 @@ public class LineSection {
                 line,
                 upStationId,
                 nextSection.getDownStationId(),
-                distance + nextSection.getDistance()
+                distance + nextSection.getDistance(),
+                duration + nextSection.getDuration()
         );
     }
 

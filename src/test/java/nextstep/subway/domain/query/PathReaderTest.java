@@ -58,8 +58,8 @@ public class PathReaderTest extends BaseTestSetup {
         // given
         List<Station> stations = stationDbUtil.insertStations("삼성역", "잠실역", "선릉역", "삼성역");
         Line line = lineDbUtil.insertLine(stations.get(0).getId(), stations.get(1).getId());
-        lineDbUtil.insertSection(line, stations.get(1).getId(), stations.get(2).getId(), 10L);
-        lineDbUtil.insertSection(line, stations.get(2).getId(), stations.get(3).getId(), 10L);
+        lineDbUtil.insertSection(line, stations.get(1).getId(), stations.get(2).getId(), 10L, 10L);
+        lineDbUtil.insertSection(line, stations.get(2).getId(), stations.get(3).getId(), 10L, 10L);
 
         // when
         PathView.Main actual = sut.findShortestPath(stations.get(0).getId(), stations.get(2).getId());

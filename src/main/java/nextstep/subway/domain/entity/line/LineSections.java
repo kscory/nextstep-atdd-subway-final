@@ -81,7 +81,7 @@ public class LineSections implements Iterable<LineSection> {
 
     private void addToMiddle(LineSection section) {
         LineSection originSection = getSectionByUpStationIdOrThrow(section.getUpStationId());
-        List<LineSection> splits = originSection.split(section.getDownStationId(), section.getDistance());
+        List<LineSection> splits = originSection.split(section.getDownStationId(), section.getDistance(), section.getDuration());
         data.addAll(data.indexOf(originSection), splits);
         data.remove(originSection);
     }
