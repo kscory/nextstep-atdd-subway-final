@@ -18,7 +18,7 @@ public class PathStepDef implements En {
     CucumberStore cucumberStore;
 
     public PathStepDef() {
-        When( "{string}과 {string} 사이의 경로를 조회하면", (String source, String target) -> {
+        When( "{string}과 {string} 사이의 최단 거리 경로를 조회하면", (String source, String target) -> {
             Long sourceId = cucumberStore.stationIdMap.get(source);
             Long targetId = cucumberStore.stationIdMap.get(target);
             response = 경로를_조회한다(sourceId, targetId);
