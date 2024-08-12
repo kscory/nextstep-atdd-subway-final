@@ -7,6 +7,7 @@ import nextstep.subway.domain.entity.station.Station;
 import nextstep.subway.domain.exception.SubwayDomainException;
 import nextstep.subway.domain.exception.SubwayDomainExceptionType;
 import nextstep.subway.domain.query.PathFinder;
+import nextstep.subway.domain.query.PathQuery;
 import nextstep.subway.fixtures.LineFixture;
 import nextstep.subway.infrastructure.jgrapht.JgraphtPathFinder;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,7 +29,7 @@ public class JgraphtPathFinderTest {
         List<Line> lines = new ArrayList<>();
 
         // when
-        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.find(lines, source, target));
+        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.find(lines, source, target, PathQuery.Type.DISTANCE));
 
         // then
         assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.SOURCE_TARGET_SAME_STATION);
@@ -46,7 +47,7 @@ public class JgraphtPathFinderTest {
         );
 
         // when
-        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.find(lines, source, target));
+        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.find(lines, source, target, PathQuery.Type.DISTANCE));
 
         // then
         assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.NOT_FOUND_STATION);
@@ -64,7 +65,7 @@ public class JgraphtPathFinderTest {
         );
 
         // when
-        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.find(lines, source, target));
+        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.find(lines, source, target, PathQuery.Type.DISTANCE));
 
         // then
         assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.NOT_FOUND_STATION);
@@ -82,7 +83,7 @@ public class JgraphtPathFinderTest {
         );
 
         // when
-        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.find(lines, source, target));
+        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.find(lines, source, target, PathQuery.Type.DISTANCE));
 
         // then
         assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.SOURCE_TARGET_NOT_CONNECTED);
@@ -96,15 +97,37 @@ public class JgraphtPathFinderTest {
         Station target = new Station(100L, UUID.randomUUID().toString());
         List<Line> lines = List.of(
                 LineFixture.prepareConnectedLine(0L, 1L, 2L, 3L, 4L),
-                LineFixture.prepareConnectedLine(6L, 1L, 98L, 99L, 100L),
+                LineFixture.prepareConnectedShortDurationLine(6L, 1L, 98L, 99L, 100L),
                 LineFixture.prepareConnectedLine(7L, 4L, 98L, 100L)
         );
 
         // when
-        PathFinder.PathResult actual = sut.find(lines, source, target);
+        PathFinder.PathResult actual = sut.find(lines, source, target, PathQuery.Type.DISTANCE);
 
         // then
         assertThat(actual.getDistance()).isEqualTo(30);
+        assertThat(actual.getDuration()).isEqualTo(45);
         assertThat(actual.getStationIds()).usingRecursiveComparison().isEqualTo(List.of(0L, 1L, 98L, 100L));
+    }
+
+    @ParameterizedTest
+    @AutoSource
+    public void sut_returns_shortest_duration_and_station_id_list(JgraphtPathFinder sut) {
+        // given
+        Station source = new Station(0L, UUID.randomUUID().toString());
+        Station target = new Station(100L, UUID.randomUUID().toString());
+        List<Line> lines = List.of(
+                LineFixture.prepareConnectedLine(0L, 1L, 2L, 3L, 4L),
+                LineFixture.prepareConnectedShortDurationLine(6L, 1L, 98L, 99L, 100L),
+                LineFixture.prepareConnectedLine(7L, 4L, 98L, 100L)
+        );
+
+        // when
+        PathFinder.PathResult actual = sut.find(lines, source, target, PathQuery.Type.DURATION);
+
+        // then
+        assertThat(actual.getDistance()).isEqualTo(40);
+        assertThat(actual.getDuration()).isEqualTo(35);
+        assertThat(actual.getStationIds()).usingRecursiveComparison().isEqualTo(List.of(0L, 1L, 98L, 99L, 100L));
     }
 }

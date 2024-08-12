@@ -1,6 +1,7 @@
 package nextstep.subway.controller;
 
 import lombok.RequiredArgsConstructor;
+import nextstep.subway.domain.query.PathQuery;
 import nextstep.subway.domain.query.PathReader;
 import nextstep.subway.domain.view.PathView;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,10 @@ public class PathController {
     @GetMapping("")
     public ResponseEntity<PathView.Main> getPath(
             @RequestParam Long source,
-            @RequestParam Long target
+            @RequestParam Long target,
+            @RequestParam PathQuery.Type type
     ) {
-        return ResponseEntity.ok().body(pathReader.findShortestPath(source, target));
+        PathQuery.Query query = new PathQuery.Query(source, target, type);
+        return ResponseEntity.ok().body(pathReader.findShortestPath(query));
     }
 }

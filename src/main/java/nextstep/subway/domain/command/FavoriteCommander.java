@@ -2,6 +2,7 @@ package nextstep.subway.domain.command;
 
 import lombok.RequiredArgsConstructor;
 import nextstep.subway.domain.entity.favorite.Favorite;
+import nextstep.subway.domain.query.PathQuery;
 import nextstep.subway.domain.query.PathReader;
 import nextstep.subway.domain.repository.FavoriteRepository;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class FavoriteCommander {
     }
 
     private void verifyPathExist(Long source, Long target) {
-        pathReader.findShortestPath(source, target);
+        PathQuery.Query query = new PathQuery.Query(source, target, PathQuery.Type.DISTANCE);
+        pathReader.findShortestPath(query);
     }
 }

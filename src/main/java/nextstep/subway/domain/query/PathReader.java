@@ -22,12 +22,13 @@ public class PathReader {
     private final PathFinder pathFinder;
 
     @Transactional(readOnly = true)
-    public PathView.Main findShortestPath(Long source, Long target) {
-        Station sourceStation = stationRepository.findByIdOrThrow(source);
-        Station targetStation = stationRepository.findByIdOrThrow(target);
+    public PathView.Main findShortestPath(PathQuery.Query query) {
+        Station sourceStation = stationRepository.findByIdOrThrow(query.source);
+        Station targetStation = stationRepository.findByIdOrThrow(query.target);
         List<Line> lines = lineRepository.findAll();
 
-        PathFinder.PathResult pathResult = pathFinder.find(lines, sourceStation, targetStation);
+        PathFinder.PathResult pathResult = pathFinder.find(lines, sourceStation, targetStation, query.type);
+
         List<StationView.Main> stations = stationRepository.findAllById(pathResult.getStationIds()).stream()
                 .map((station -> new StationView.Main(station.getId(), station.getName())))
                 .collect(Collectors.toList());

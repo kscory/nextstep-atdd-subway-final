@@ -5,6 +5,7 @@ import lombok.Getter;
 import nextstep.subway.domain.command.LineCommand;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Getter
 @Entity(name = "lines")
@@ -49,5 +50,9 @@ public class Line {
 
     public void deleteSection(Long stationId) {
         sections.deleteSection(stationId);
+    }
+
+    public Optional<LineSection> findSectionByUpDownStationId(Long upStationId, Long downStationId) {
+        return sections.findSectionByUpDownStationID(upStationId, downStationId);
     }
 }

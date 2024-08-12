@@ -1,5 +1,6 @@
 package nextstep.subway.acceptance;
 
+import nextstep.subway.domain.query.PathQuery;
 import nextstep.util.BaseTestSetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -72,7 +73,7 @@ class PathAcceptanceTest extends BaseTestSetup {
         Long 삼성역_id = 2222L;
 
         // when
-        var 경로_조회_응답값 = 경로를_조회한다(삼성역_id, 시청역_id);
+        var 경로_조회_응답값 = 경로를_조회한다(삼성역_id, 시청역_id, PathQuery.Type.DISTANCE);
 
         // then
         응답_상태값이_올바른지_검증한다(경로_조회_응답값, HttpStatus.NOT_FOUND.value());
@@ -89,7 +90,7 @@ class PathAcceptanceTest extends BaseTestSetup {
         Long 삼성역_id = 2222L;
 
         // when
-        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 삼성역_id);
+        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 삼성역_id, PathQuery.Type.DISTANCE);
 
         // then
         응답_상태값이_올바른지_검증한다(경로_조회_응답값, HttpStatus.NOT_FOUND.value());
@@ -103,7 +104,7 @@ class PathAcceptanceTest extends BaseTestSetup {
     @Test
     void 출발역과_도착역이_동일한경우_경로_조회시_오류_발생_테스트() {
         // when
-        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 시청역_id);
+        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 시청역_id, PathQuery.Type.DISTANCE);
 
         // then
         응답_상태값이_올바른지_검증한다(경로_조회_응답값, HttpStatus.BAD_REQUEST.value());
@@ -122,7 +123,7 @@ class PathAcceptanceTest extends BaseTestSetup {
         분당선을_생성한다(선릉역_id, 한티역_id, 10L, 10L);
 
         // when
-        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 선릉역_id);
+        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 선릉역_id, PathQuery.Type.DISTANCE);
 
         // then
         응답_상태값이_올바른지_검증한다(경로_조회_응답값, HttpStatus.BAD_REQUEST.value());
@@ -136,7 +137,7 @@ class PathAcceptanceTest extends BaseTestSetup {
     @Test
     void 경로_조회_테스트() {
         // when
-        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 충무로역_id);
+        var 경로_조회_응답값 = 경로를_조회한다(시청역_id, 충무로역_id, PathQuery.Type.DISTANCE);
 
         // then
         응답_상태값이_올바른지_검증한다(경로_조회_응답값, HttpStatus.OK.value());

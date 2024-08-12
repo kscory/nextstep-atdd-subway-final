@@ -30,11 +30,12 @@ public class PathReaderTest extends BaseTestSetup {
     @Test
     public void sut_throws_error_if_not_found_source_station() {
         // given
-        Long source = 22L;
         Station targetStation = stationDbUtil.insertStations("선릉역").get(0);
+        PathQuery.Query query = new PathQuery.Query(22L, targetStation.getId(), PathQuery.Type.DISTANCE);
+
 
         // when
-        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.findShortestPath(source, targetStation.getId()));
+        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.findShortestPath(query));
 
         // then
         assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.NOT_FOUND_STATION);
@@ -44,25 +45,26 @@ public class PathReaderTest extends BaseTestSetup {
     public void sut_throws_error_if_not_found_target_station() {
         // given
         Station targetStation = stationDbUtil.insertStations("선릉역").get(0);
-        Long target = 22L;
+        PathQuery.Query query = new PathQuery.Query(targetStation.getId(), 22L, PathQuery.Type.DISTANCE);
 
         // when
-        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.findShortestPath(targetStation.getId(), target));
+        SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.findShortestPath(query));
 
         // then
         assertThat(actual.getExceptionType()).isEqualTo(SubwayDomainExceptionType.NOT_FOUND_STATION);
     }
 
     @Test
-    public void sut_returns_shortest_path() {
+    public void sut_returns_shortest_distance_path() {
         // given
         List<Station> stations = stationDbUtil.insertStations("삼성역", "잠실역", "선릉역", "삼성역");
         Line line = lineDbUtil.insertLine(stations.get(0).getId(), stations.get(1).getId());
         lineDbUtil.insertSection(line, stations.get(1).getId(), stations.get(2).getId(), 10L, 10L);
         lineDbUtil.insertSection(line, stations.get(2).getId(), stations.get(3).getId(), 10L, 10L);
+        PathQuery.Query query = new PathQuery.Query(stations.get(0).getId(), stations.get(2).getId(), PathQuery.Type.DISTANCE);
 
         // when
-        PathView.Main actual = sut.findShortestPath(stations.get(0).getId(), stations.get(2).getId());
+        PathView.Main actual = sut.findShortestPath(query);
 
         // then
         assertThat(actual.getStations().size()).isEqualTo(3);

@@ -10,6 +10,7 @@ import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Embeddable
@@ -168,6 +169,12 @@ public class LineSections implements Iterable<LineSection> {
         return data.stream()
                 .map(LineSection::getUpStationId)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<LineSection> findSectionByUpDownStationID(Long upStationId, Long downStationId) {
+        return data.stream()
+                .filter(section -> section.isSameUpStation(upStationId) && section.isSameDownStation(downStationId))
+                .findFirst();
     }
 
     public List<Long> getAllStationIds() {

@@ -4,6 +4,7 @@ import io.cucumber.java8.En;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import nextstep.cucumber.CucumberStore;
+import nextstep.subway.domain.query.PathQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class PathStepDef implements En {
         When( "{string}과 {string} 사이의 최단 거리 경로를 조회하면", (String source, String target) -> {
             Long sourceId = cucumberStore.stationIdMap.get(source);
             Long targetId = cucumberStore.stationIdMap.get(target);
-            response = 경로를_조회한다(sourceId, targetId);
+            response = 경로를_조회한다(sourceId, targetId, PathQuery.Type.DISTANCE);
         });
 
         Then("{string} 역들이 조회된다", (String stations) -> {

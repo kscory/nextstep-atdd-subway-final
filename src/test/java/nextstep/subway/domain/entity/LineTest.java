@@ -3,6 +3,7 @@ package nextstep.subway.domain.entity;
 import autoparams.AutoSource;
 import nextstep.subway.domain.command.LineCommand;
 import nextstep.subway.domain.entity.line.Line;
+import nextstep.subway.domain.entity.line.LineSection;
 import nextstep.subway.domain.entity.line.LineSections;
 import nextstep.subway.domain.exception.SubwayDomainException;
 import nextstep.subway.domain.exception.SubwayDomainExceptionType;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -286,6 +288,38 @@ public class LineTest {
 
             // then
             assertThat(sut.getSections().get(0).getDuration()).isEqualTo(40L);
+        }
+    }
+
+    @DisplayName("findSectionByUpDownStationId")
+    @Nested
+    class FindSectionByUpDownStationId {
+        @Test
+        public void sut_returns_section() {
+            // given
+            Line sut = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L, 5L);
+
+            // when
+            Optional<LineSection> actual = sut.findSectionByUpDownStationId(3L, 4L);
+
+            // then
+            assertThat(actual).isNotEmpty();
+            assertThat(actual.get().getUpStationId()).isEqualTo(3L);
+            assertThat(actual.get().getDownStationId()).isEqualTo(4L);
+            assertThat(actual.get().getDistance()).isEqualTo(10L);
+            assertThat(actual.get().getDuration()).isEqualTo(20L);
+        }
+
+        @Test
+        public void sut_returns_empty_if_not_found() {
+            // given
+            Line sut = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L, 5L);
+
+            // when
+            Optional<LineSection> actual = sut.findSectionByUpDownStationId(3L, 5L);
+
+            // then
+            assertThat(actual).isEmpty();
         }
     }
 }
