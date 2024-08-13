@@ -1,7 +1,9 @@
 package nextstep.subway.infrastructure.jgrapht;
 
 import nextstep.subway.domain.entity.line.Line;
+import nextstep.subway.domain.entity.line.LineSection;
 import nextstep.subway.domain.entity.line.LineSections;
+import nextstep.subway.domain.entity.path.Path;
 import nextstep.subway.domain.entity.station.Station;
 import nextstep.subway.domain.exception.SubwayDomainException;
 import nextstep.subway.domain.exception.SubwayDomainExceptionType;
@@ -13,21 +15,22 @@ import org.jgrapht.graph.WeightedMultigraph;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class JgraphtPathFinder implements PathFinder {
     @Override
-    public PathResult find(List<Line> lines, Station source, Station target, PathQuery.Type type) {
+    public Path find(List<Line> lines, Station source, Station target, PathQuery.Type type) {
         verifySameStation(source, target);
 
         WeightedMultigraph<Long, LineSectionEdge> graph = initGraph(lines, source, target, type);
 
         GraphPath<Long, LineSectionEdge> shortestPath = findShortestPath(graph, source, target);
 
-        List<LineSectionEdge> edges = shortestPath.getEdgeList();
-        Long totalDistance = edges.stream().map(LineSectionEdge::getDistance).mapToLong(Long::longValue).sum();
-        Long totalDuration = edges.stream().map(LineSectionEdge::getDuration).mapToLong(Long::longValue).sum();
-        return new PathResult(shortestPath.getVertexList(), totalDistance, totalDuration);
+        List<LineSection> sections = shortestPath.getEdgeList().stream()
+                .map(LineSectionEdge::getSection)
+                .collect(Collectors.toList());
+        return Path.of(sections);
     }
 
     private WeightedMultigraph<Long, LineSectionEdge> initGraph(List<Line> lines, Station source, Station target, PathQuery.Type type) {

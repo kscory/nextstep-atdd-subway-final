@@ -70,6 +70,7 @@ public class PathReaderTest extends BaseTestSetup {
         assertThat(actual.getStations().size()).isEqualTo(3);
         assertThat(actual.getDistance()).isEqualTo(20L);
         assertThat(actual.getDuration()).isEqualTo(40L);
+//        assertThat(actual.getFare()).isEqualTo(1450L);
     }
 }
 

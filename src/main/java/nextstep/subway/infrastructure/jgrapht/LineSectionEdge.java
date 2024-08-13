@@ -7,19 +7,17 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 
 @Getter
 public class LineSectionEdge extends DefaultWeightedEdge {
-    private Long distance;
-    private Long duration;
+    private final LineSection section;
 
     public LineSectionEdge(LineSection section) {
-        this.distance = section.getDistance();
-        this.duration = section.getDuration();
+        this.section = section;
     }
 
     protected double getWeight(PathQuery.Type type) {
         if (type == PathQuery.Type.DISTANCE) {
-            return distance;
+            return section.getDistance();
         }
-        return duration;
+        return section.getDuration();
     }
 
     @Override
