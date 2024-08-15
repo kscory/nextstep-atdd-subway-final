@@ -3,10 +3,10 @@ package nextstep.subway.domain.infrastructure.jgrapht;
 
 import autoparams.AutoSource;
 import nextstep.subway.domain.entity.line.Line;
+import nextstep.subway.domain.entity.path.Path;
 import nextstep.subway.domain.entity.station.Station;
 import nextstep.subway.domain.exception.SubwayDomainException;
 import nextstep.subway.domain.exception.SubwayDomainExceptionType;
-import nextstep.subway.domain.query.PathFinder;
 import nextstep.subway.domain.query.PathQuery;
 import nextstep.subway.fixtures.LineFixture;
 import nextstep.subway.infrastructure.jgrapht.JgraphtPathFinder;
@@ -91,7 +91,7 @@ public class JgraphtPathFinderTest {
 
     @ParameterizedTest
     @AutoSource
-    public void sut_returns_shortest_distance_and_station_id_list(JgraphtPathFinder sut) {
+    public void sut_returns_shortest_distance_section_list(JgraphtPathFinder sut) {
         // given
         Station source = new Station(0L, UUID.randomUUID().toString());
         Station target = new Station(100L, UUID.randomUUID().toString());
@@ -102,17 +102,17 @@ public class JgraphtPathFinderTest {
         );
 
         // when
-        PathFinder.PathResult actual = sut.find(lines, source, target, PathQuery.Type.DISTANCE);
+        Path actual = sut.find(lines, source, target, PathQuery.Type.DISTANCE);
 
         // then
-        assertThat(actual.getDistance()).isEqualTo(30);
-        assertThat(actual.getDuration()).isEqualTo(45);
-        assertThat(actual.getStationIds()).usingRecursiveComparison().isEqualTo(List.of(0L, 1L, 98L, 100L));
+        assertThat(actual.totalDistance()).isEqualTo(30);
+        assertThat(actual.totalDuration()).isEqualTo(45);
+        assertThat(actual.getAllStationIds()).usingRecursiveComparison().isEqualTo(List.of(0L, 1L, 98L, 100L));
     }
 
     @ParameterizedTest
     @AutoSource
-    public void sut_returns_shortest_duration_and_station_id_list(JgraphtPathFinder sut) {
+    public void sut_returns_shortest_duration_section_list(JgraphtPathFinder sut) {
         // given
         Station source = new Station(0L, UUID.randomUUID().toString());
         Station target = new Station(100L, UUID.randomUUID().toString());
@@ -123,11 +123,11 @@ public class JgraphtPathFinderTest {
         );
 
         // when
-        PathFinder.PathResult actual = sut.find(lines, source, target, PathQuery.Type.DURATION);
+        Path actual = sut.find(lines, source, target, PathQuery.Type.DURATION);
 
         // then
-        assertThat(actual.getDistance()).isEqualTo(40);
-        assertThat(actual.getDuration()).isEqualTo(35);
-        assertThat(actual.getStationIds()).usingRecursiveComparison().isEqualTo(List.of(0L, 1L, 98L, 99L, 100L));
+        assertThat(actual.totalDistance()).isEqualTo(40);
+        assertThat(actual.totalDuration()).isEqualTo(35);
+        assertThat(actual.getAllStationIds()).usingRecursiveComparison().isEqualTo(List.of(0L, 1L, 98L, 99L, 100L));
     }
 }

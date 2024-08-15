@@ -37,14 +37,19 @@ public class PathStepDef implements En {
             assertThat(actual).containsExactly(expected);
         });
 
-        Then("최단 거리 {long} 를 반환한다.", (Long distance) -> {
+        Then("경로의 거리 {long} 를 반환한다.", (Long distance) -> {
             Long actual = response.jsonPath().getLong("distance");
             assertThat(actual).isEqualTo(distance);
         });
 
-        Then("최단 시간 {long} 를 반환한다.", (Long duration) -> {
+        Then("경로의 시간 {long} 를 반환한다.", (Long duration) -> {
             Long actual = response.jsonPath().getLong("duration");
             assertThat(actual).isEqualTo(duration);
+        });
+
+        Then("경로의 이용 요금 {long} 를 반환한다.", (Long fare) -> {
+            Long actual = response.jsonPath().getLong("fare");
+            assertThat(actual).isEqualTo(fare);
         });
     }
 }
