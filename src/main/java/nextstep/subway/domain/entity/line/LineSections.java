@@ -12,12 +12,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Embeddable
 public class LineSections implements Iterable<LineSection> {
     @OneToMany(mappedBy = "line", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("position")
     private List<LineSection> data = new ArrayList<>();
+
+    public LineSections() {
+    }
+
+    public LineSections(List<LineSection> data) {
+        this.data = data;
+    }
 
     public LineSection get(int idx) {
         return data.get(idx);
@@ -186,6 +194,22 @@ public class LineSections implements Iterable<LineSection> {
             stationIds.add(getLastSection().getDownStationId());
         }
         return stationIds;
+    }
+
+    public Long totalDistance() {
+        return data.stream()
+                .mapToLong(LineSection::getDistance)
+                .sum();
+    }
+
+    public Long totalDuration() {
+        return data.stream()
+                .mapToLong(LineSection::getDuration)
+                .sum();
+    }
+
+    public Stream<LineSection> stream() {
+        return data.stream();
     }
 
     @Override

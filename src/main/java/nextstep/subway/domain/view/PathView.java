@@ -14,5 +14,6 @@ public class PathView {
         private List<StationView.Main> stations;
         private Long distance;
         private Long duration;
+        private Long fare;
     }
 }
