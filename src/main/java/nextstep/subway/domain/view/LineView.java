@@ -15,6 +15,7 @@ public class LineView {
         private Long id;
         private String name;
         private String color;
+        private Long additionalBasicFare;
         private List<StationView.Main> stations;
     }
 }

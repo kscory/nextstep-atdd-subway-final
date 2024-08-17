@@ -1,13 +1,14 @@
 package nextstep.subway.controller.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 import nextstep.subway.domain.command.LineCommand;
 
-@ToString
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CreateLineRequest {
     private String name;
     private String color;
@@ -15,8 +16,17 @@ public class CreateLineRequest {
     private Long downStationId;
     private Long distance;
     private Long duration;
+    private Long additionalBasicFare;
 
     public LineCommand.CreateLine toCommand() {
-        return new LineCommand.CreateLine(name, color, upStationId, downStationId, distance, duration);
+        return new LineCommand.CreateLine(
+                name,
+                color,
+                upStationId,
+                downStationId,
+                distance,
+                duration,
+                additionalBasicFare
+        );
     }
 }

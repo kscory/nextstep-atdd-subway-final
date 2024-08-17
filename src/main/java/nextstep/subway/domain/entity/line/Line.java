@@ -1,6 +1,5 @@
 package nextstep.subway.domain.entity.line;
 
-import lombok.Builder;
 import lombok.Getter;
 import nextstep.subway.domain.command.LineCommand;
 
@@ -20,21 +19,24 @@ public class Line {
     @Column(length = 50, nullable = false)
     private String color;
 
+    @Column(nullable = false)
+    private Long additionalBasicFare;
+
     @Embedded
     private LineSections sections;
 
     protected Line() {
     }
 
-    @Builder
-    public Line(String name, String color, LineSections sections) {
+    public Line(String name, String color, Long additionalBasicFare, LineSections sections) {
         this.name = name;
         this.color = color;
         this.sections = sections;
+        this.additionalBasicFare = additionalBasicFare;
     }
 
     public static Line init(LineCommand.CreateLine command) {
-        Line line = new Line(command.getName(), command.getColor(), new LineSections());
+        Line line = new Line(command.getName(), command.getColor(), command.getAdditionalBasicFare(), new LineSections());
         line.addSection(command.getUpStationId(), command.getDownStationId(), command.getDistance(), command.getDuration());
         return line;
     }
@@ -42,6 +44,7 @@ public class Line {
     public void update(LineCommand.UpdateLine command) {
         this.name = command.getName();
         this.color = command.getColor();
+        this.additionalBasicFare = command.getAdditionalBasicFare();
     }
 
     public void addSection(Long upStationId, Long downStationId, Long distance, Long duration) {

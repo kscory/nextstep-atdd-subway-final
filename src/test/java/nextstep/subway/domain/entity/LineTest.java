@@ -34,6 +34,7 @@ public class LineTest {
             assertAll("assert init",
                     () -> assertThat(actual.getName()).isEqualTo(command.getName()),
                     () -> assertThat(actual.getColor()).isEqualTo(command.getColor()),
+                    () -> assertThat(actual.getAdditionalBasicFare()).isEqualTo(command.getAdditionalBasicFare()),
 
                     // section
                     () -> assertThat(actual.getSections().size()).isEqualTo(1),
@@ -127,7 +128,7 @@ public class LineTest {
         @Test
         public void sut_add_section_if_empty() {
             // given
-            Line sut = new Line("11", "cc", new LineSections());
+            Line sut = new Line("11", "cc", 99L, new LineSections());
 
             // when
             sut.addSection(1L, 2L, 10L, 10L);

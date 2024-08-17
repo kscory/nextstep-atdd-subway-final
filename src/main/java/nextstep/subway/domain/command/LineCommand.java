@@ -15,6 +15,7 @@ public class LineCommand {
         private Long downStationId;
         private Long distance;
         private Long duration;
+        private Long additionalBasicFare;
     }
 
     @ToString
@@ -24,6 +25,7 @@ public class LineCommand {
         private Long id;
         private String name;
         private String color;
+        private Long additionalBasicFare;
     }
 
     @ToString

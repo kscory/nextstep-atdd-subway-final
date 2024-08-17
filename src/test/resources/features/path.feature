@@ -18,11 +18,11 @@ Feature: 지하철 경로 검색
       | 명동역    |
       | 충무로역   |
     And 노선들을 생성하고
-      | name | color   | upStation | downStation | distance | duration |
-      | 일호선  | #0052A4 | 시청역       | 서울역         | 10       | 5       |
-      | 이호선  | #00A84D | 시청역       | 을지로입구역      | 10       | 10       |
-      | 삼호선  | #EF7C1C | 을지로3가역    | 충무로역        | 10       | 10       |
-      | 사호선  | #00A4E3 | 서울역       | 회현역         | 10       | 5       |
+      | name | color   | upStation | downStation | distance | duration | additionalBasicFare |
+      | 일호선  | #0052A4 | 시청역       | 서울역         | 10       | 5       | 0                    |
+      | 이호선  | #00A84D | 시청역       | 을지로입구역      | 10       | 10       | 0                   |
+      | 삼호선  | #EF7C1C | 을지로3가역    | 충무로역        | 10       | 10       | 0                   |
+      | 사호선  | #00A4E3 | 서울역       | 회현역         | 10       | 5       | 0                    |
     And 구간들을 추가하고
       | line | upStation | downStation | distance | duration |
       | 이호선  | 을지로입구역    | 을지로3가역      | 10       | 10       |
