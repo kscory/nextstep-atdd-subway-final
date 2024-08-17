@@ -8,4 +8,5 @@ import lombok.Getter;
 public class TokenPrincipal {
     private Long subject;
     private String email;
+    private Integer age;
 }

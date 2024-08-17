@@ -29,6 +29,6 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
         String token = authorization.split(" ")[1];
 
         TokenPrincipal principal = jwtTokenProvider.getPrincipal(token);
-        return new LoginMember(principal.getSubject(), principal.getEmail());
+        return new LoginMember(principal.getSubject(), principal.getEmail(), principal.getAge());
     }
 }

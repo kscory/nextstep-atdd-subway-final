@@ -61,5 +61,6 @@ class MemberEmailPasswordVerifierTest extends BaseTestSetup {
         // then
         assertThat(actual.getSubject()).isEqualTo(member.getId());
         assertThat(actual.getEmail()).isEqualTo(member.getEmail());
+        assertThat(actual.getAge()).isEqualTo(member.getAge());
     }
 }
