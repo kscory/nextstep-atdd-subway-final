@@ -43,4 +43,21 @@ public class PathTest {
             assertThat(actual).isEqualTo(60L);
         }
     }
+
+    @DisplayName("additionalBasicFare")
+    @Nested
+    class AdditionalBasicFare {
+        @Test
+        public void sut_returns_additional_basic_fare() {
+            // given
+            LineSections lineSections = LineFixture.prepareConnectedLine(1L, 2L, 3L, 4L).getSections();
+            Path sut = new Path(lineSections);
+
+            // when
+            Long actual = sut.totalDuration();
+
+            // then
+            assertThat(actual).isEqualTo(60L);
+        }
+    }
 }

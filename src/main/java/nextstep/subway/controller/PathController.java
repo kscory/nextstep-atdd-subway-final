@@ -1,6 +1,8 @@
 package nextstep.subway.controller;
 
 import lombok.RequiredArgsConstructor;
+import nextstep.auth.domain.entity.LoginMember;
+import nextstep.configuration.auth.AuthenticationPrincipal;
 import nextstep.subway.domain.query.PathQuery;
 import nextstep.subway.domain.query.PathReader;
 import nextstep.subway.domain.view.PathView;
@@ -21,9 +23,11 @@ public class PathController {
     public ResponseEntity<PathView.Main> getPath(
             @RequestParam Long source,
             @RequestParam Long target,
-            @RequestParam PathQuery.Type type
-    ) {
-        PathQuery.Query query = new PathQuery.Query(source, target, type);
+            @RequestParam PathQuery.Type type,
+            @AuthenticationPrincipal(required = false) LoginMember loginMember
+        ) {
+        Integer age = loginMember == null ? null : loginMember.getAge();
+        PathQuery.Query query = new PathQuery.Query(source, target, type, age);
         return ResponseEntity.ok().body(pathReader.findShortestPath(query));
     }
 }
