@@ -9,4 +9,5 @@ import java.util.Map;
 public class CucumberStore {
     public Map<String, Long> stationIdMap = new HashMap<>();
     public Map<String, Long> lineIdMap = new HashMap<>();
+    public Map<String, String> tokenEmailMap = new HashMap<>();
 }

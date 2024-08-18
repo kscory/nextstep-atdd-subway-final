@@ -61,7 +61,7 @@ public class PathReaderTest extends BaseTestSetup {
         Line line = lineDbUtil.insertLine(stations.get(0).getId(), stations.get(1).getId());
         lineDbUtil.insertSection(line, stations.get(1).getId(), stations.get(2).getId(), 10L, 20L);
         lineDbUtil.insertSection(line, stations.get(2).getId(), stations.get(3).getId(), 10L, 20L);
-        PathQuery.Query query = new PathQuery.Query(stations.get(0).getId(), stations.get(2).getId(), PathQuery.Type.DISTANCE, null);
+        PathQuery.Query query = new PathQuery.Query(stations.get(0).getId(), stations.get(2).getId(), PathQuery.Type.DISTANCE, 20);
 
         // when
         PathView.Main actual = sut.findShortestPath(query);

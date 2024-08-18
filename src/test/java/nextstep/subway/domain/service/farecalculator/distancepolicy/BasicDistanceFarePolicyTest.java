@@ -1,8 +1,7 @@
-package nextstep.subway.domain.service.farecalculator;
+package nextstep.subway.domain.service.farecalculator.distancepolicy;
 
 import autoparams.AutoSource;
 import autoparams.Repeat;
-import nextstep.subway.domain.service.farecalculator.distancepolicy.BasicDistanceFarePolicy;
 import org.junit.jupiter.params.ParameterizedTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
