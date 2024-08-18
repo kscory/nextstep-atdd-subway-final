@@ -1,9 +1,9 @@
-package nextstep.subway.domain.service.farecalculator;
+package nextstep.subway.domain.service.farecalculator.distancepolicy;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class AdditionalSecondFarePolicy implements FarePolicy {
+public class AdditionalSecondDistanceFarePolicy implements DistanceFarePolicy {
     private static final long PREV_MAX_DISTANCE = 50;
 
     private static final long FARE_DISTANCE_UNIT = 8;

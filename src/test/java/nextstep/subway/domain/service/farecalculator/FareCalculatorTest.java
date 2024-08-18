@@ -29,9 +29,24 @@ class FareCalculatorTest extends BaseTestSetup {
             "75, 2450",
             "82, 2450"
     })
-    public void sut_returns_total_fare(long totalDistance, long expected) {
+    public void sut_returns_total_fare_if_additionalBasicFare_zero(long totalDistance, long expected) {
         // when
         long actual = sut.getFare(totalDistance);
+
+        // then
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @CsvAutoSource({
+            "3, 400, 1650",
+            "5, 900, 2150",
+            "8, 300, 1550",
+            "9, 300, 1550",
+    })
+    public void sut_returns_total_fare_if_additionalBasicFare_existed(long totalDistance, long additionalBasicFare, long expected) {
+        // when
+        long actual = sut.getFare(totalDistance, additionalBasicFare);
 
         // then
         assertThat(actual).isEqualTo(expected);
