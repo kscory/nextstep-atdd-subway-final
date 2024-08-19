@@ -16,10 +16,12 @@ public class JwtTokenProvider implements TokenGenerator {
 
     private final JwtConfig jwtConfig;
     private static final String CLAIMS_EMAIL = "EMAIL";
+    private static final String CLAIMS_AGE = "AGE";
 
     public String createToken(TokenPrincipal principal) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIMS_EMAIL, principal.getEmail());
+        claims.put(CLAIMS_AGE, principal.getAge());
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + jwtConfig.getValidityInMilliseconds());
@@ -39,7 +41,11 @@ public class JwtTokenProvider implements TokenGenerator {
                 .parseClaimsJws(token)
                 .getBody();
 
-        return new TokenPrincipal(Long.valueOf(claims.getSubject()), claims.get(CLAIMS_EMAIL, String.class));
+        return new TokenPrincipal(
+                Long.valueOf(claims.getSubject()),
+                claims.get(CLAIMS_EMAIL, String.class),
+                claims.get(CLAIMS_AGE, Integer.class)
+        );
     }
 
     public boolean validateToken(String token) {

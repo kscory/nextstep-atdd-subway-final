@@ -1,24 +1,28 @@
-package nextstep.subway.domain.service.farecalculator;
+package nextstep.subway.domain.service.farecalculator.distancepolicy;
 
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
-@Order(3)
-public class AdditionalSecondFarePolicy implements FarePolicy {
-    private static final long PREV_MAX_DISTANCE = 50;
+public class AdditionalFirstDistanceFarePolicy implements DistanceFarePolicy {
+    private static final long PREV_MAX_DISTANCE = 10;
 
-    private static final long FARE_DISTANCE_UNIT = 8;
+    private static final long MAX_DISTANCE_DURATION = 40;
+    private static final long FARE_DISTANCE_UNIT = 5;
     private static final long FARE_UNIT = 100;
 
     @Override
     public long getFare(long totalDistance) {
-        long additionalDistance = Math.max(totalDistance - PREV_MAX_DISTANCE, 0);
+        long additionalDistance = extractAdditionalDistance(totalDistance);
         if (additionalDistance <= 0) {
             return 0;
         }
 
         return getTotalMultiplyUnit(additionalDistance) * FARE_UNIT;
+    }
+
+    private long extractAdditionalDistance(long totalDistance) {
+        long restDistance = Math.min(totalDistance - PREV_MAX_DISTANCE, MAX_DISTANCE_DURATION);
+        return Math.max(restDistance, 0);
     }
 
     private long getTotalMultiplyUnit(long additionalDistance) {

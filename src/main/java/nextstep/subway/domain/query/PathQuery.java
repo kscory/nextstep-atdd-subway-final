@@ -17,5 +17,6 @@ public class PathQuery {
         Long source;
         Long target;
         Type type;
+        Integer age;
     }
 }

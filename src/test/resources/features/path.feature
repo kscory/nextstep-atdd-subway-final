@@ -18,11 +18,11 @@ Feature: 지하철 경로 검색
       | 명동역    |
       | 충무로역   |
     And 노선들을 생성하고
-      | name | color   | upStation | downStation | distance | duration |
-      | 일호선  | #0052A4 | 시청역       | 서울역         | 10       | 5       |
-      | 이호선  | #00A84D | 시청역       | 을지로입구역      | 10       | 10       |
-      | 삼호선  | #EF7C1C | 을지로3가역    | 충무로역        | 10       | 10       |
-      | 사호선  | #00A4E3 | 서울역       | 회현역         | 10       | 5       |
+      | name | color   | upStation | downStation | distance | duration | additionalBasicFare |
+      | 일호선  | #0052A4 | 시청역       | 서울역         | 10       | 5       | 100                    |
+      | 이호선  | #00A84D | 시청역       | 을지로입구역      | 10       | 10       | 0                   |
+      | 삼호선  | #EF7C1C | 을지로3가역    | 충무로역        | 10       | 10       | 0                   |
+      | 사호선  | #00A4E3 | 서울역       | 회현역         | 10       | 5       | 0                    |
     And 구간들을 추가하고
       | line | upStation | downStation | distance | duration |
       | 이호선  | 을지로입구역    | 을지로3가역      | 10       | 10       |
@@ -41,4 +41,13 @@ Feature: 지하철 경로 검색
     Then "시청역,서울역,회현역,명동역,충무로역" 역들이 조회된다
     And 경로의 거리 40 를 반환한다.
     And 경로의 시간 20 를 반환한다.
-    And 경로의 이용 요금 1850 를 반환한다.
+    And 경로의 이용 요금 1950 를 반환한다.
+
+  Scenario: 로그인된 사용자의 두 역의 최단 시간 경로를 조회힌다.
+    Given email: "sample@email.com", password: "1234", age: 18 의 회원을 생성하고
+    And "sample@email.com", "1234" 으로 이메일 패스워드 로그인을 하고
+    When 인증된 사용자 "sample@email.com" 의 "시청역"과 "충무로역" 사이의 최단 시간 경로를 조회하면
+    Then "시청역,서울역,회현역,명동역,충무로역" 역들이 조회된다
+    And 경로의 거리 40 를 반환한다.
+    And 경로의 시간 20 를 반환한다.
+    And 경로의 이용 요금 1630 를 반환한다.

@@ -45,5 +45,6 @@ class MemberSocialOAuthUserVerifierTest extends BaseTestSetup {
         // then
         assertThat(actual.getSubject()).isEqualTo(expected.getId());
         assertThat(actual.getEmail()).isEqualTo(expected.getEmail());
+        assertThat(actual.getAge()).isNull();
     }
 }

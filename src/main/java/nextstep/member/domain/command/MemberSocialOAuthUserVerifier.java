@@ -19,6 +19,6 @@ public class MemberSocialOAuthUserVerifier implements SocialOAuthUserVerifier {
     public TokenPrincipal verify(SocialOAuthUser socialOAuthUser) {
         Member member = memberRepository.findByEmail(socialOAuthUser.getEmail())
                 .orElseGet(() -> memberRepository.save(Member.ofEmail(socialOAuthUser.getEmail())));
-        return new TokenPrincipal(member.getId(), member.getEmail());
+        return new TokenPrincipal(member.getId(), member.getEmail(), member.getAge());
     }
 }

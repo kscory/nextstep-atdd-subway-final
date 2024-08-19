@@ -32,7 +32,8 @@ public class LineStepDef implements En {
                         cucumberStore.stationIdMap.get(entry.get("upStation")),
                         cucumberStore.stationIdMap.get(entry.get("downStation")),
                         Long.parseLong(entry.get("distance")),
-                        Long.parseLong(entry.get("duration"))
+                        Long.parseLong(entry.get("duration")),
+                        Long.parseLong(entry.get("additionalBasicFare"))
                 );
                 ExtractableResponse<Response> lineResponse = 노선을_생성한다(request);
                 cucumberStore.lineIdMap.put(lineName, lineResponse.jsonPath().getLong("id"));

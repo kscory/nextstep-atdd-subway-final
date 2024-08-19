@@ -29,4 +29,8 @@ public class Path {
     public Long totalDuration() {
         return sections.totalDuration();
     }
+
+    public Long additionalBasicFare() {
+        return sections.getAdditionalBasicFare();
+    }
 }

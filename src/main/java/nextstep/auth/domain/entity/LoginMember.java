@@ -8,4 +8,5 @@ import lombok.Getter;
 public class LoginMember {
     private Long id;
     private String email;
+    private Integer age;
 }

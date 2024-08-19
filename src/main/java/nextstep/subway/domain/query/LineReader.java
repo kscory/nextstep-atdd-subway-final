@@ -54,6 +54,6 @@ public class LineReader {
                 .map(station -> new StationView.Main(station.getId(), station.getName()))
                 .collect(Collectors.toList());
 
-        return new LineView.Main(line.getId(), line.getName(), line.getColor(), allStations);
+        return new LineView.Main(line.getId(), line.getName(), line.getColor(), line.getAdditionalBasicFare(), allStations);
     }
 }

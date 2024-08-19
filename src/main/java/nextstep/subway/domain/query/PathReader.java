@@ -36,7 +36,7 @@ public class PathReader {
                 .map((station -> new StationView.Main(station.getId(), station.getName())))
                 .collect(Collectors.toList());
 
-        long fare = fareCalculator.getFare(path.totalDistance());
+        long fare = fareCalculator.getFare(path.totalDistance(), path.additionalBasicFare(), query.age);
 
         return new PathView.Main(
                 stations,

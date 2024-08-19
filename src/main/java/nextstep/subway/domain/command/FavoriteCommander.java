@@ -30,7 +30,7 @@ public class FavoriteCommander {
     }
 
     private void verifyPathExist(Long source, Long target) {
-        PathQuery.Query query = new PathQuery.Query(source, target, PathQuery.Type.DISTANCE);
+        PathQuery.Query query = new PathQuery.Query(source, target, PathQuery.Type.DISTANCE, null);
         pathReader.findShortestPath(query);
     }
 }
