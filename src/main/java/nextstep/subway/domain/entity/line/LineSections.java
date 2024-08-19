@@ -208,6 +208,14 @@ public class LineSections implements Iterable<LineSection> {
                 .sum();
     }
 
+    public Long getAdditionalBasicFare() {
+        return data.stream()
+                .map(LineSection::getLine)
+                .mapToLong(Line::getAdditionalBasicFare)
+                .max()
+                .orElse(0);
+    }
+
     public Stream<LineSection> stream() {
         return data.stream();
     }

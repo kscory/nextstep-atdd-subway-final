@@ -22,13 +22,22 @@ public class AuthenticationPrincipalArgumentResolver implements HandlerMethodArg
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        AuthenticationPrincipal annotation = parameter.getParameterAnnotation(AuthenticationPrincipal.class);
+        if (annotation == null) {
+            throw new AuthenticationException();
+        }
+
         String authorization = webRequest.getHeader("Authorization");
+        if (authorization == null && !annotation.required()) {
+            return null;
+        }
+
         if (!"bearer".equalsIgnoreCase(authorization.split(" ")[0])) {
             throw new AuthenticationException();
         }
         String token = authorization.split(" ")[1];
 
         TokenPrincipal principal = jwtTokenProvider.getPrincipal(token);
-        return new LoginMember(principal.getSubject(), principal.getEmail());
+        return new LoginMember(principal.getSubject(), principal.getEmail(), principal.getAge());
     }
 }

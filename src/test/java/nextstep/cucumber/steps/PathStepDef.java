@@ -25,6 +25,13 @@ public class PathStepDef implements En {
             response = 경로를_조회한다(sourceId, targetId, PathQuery.Type.DISTANCE);
         });
 
+        When("인증된 사용자 {string} 의 {string}과 {string} 사이의 최단 시간 경로를 조회하면", (String email, String source, String target) -> {
+            Long sourceId = cucumberStore.stationIdMap.get(source);
+            Long targetId = cucumberStore.stationIdMap.get(target);
+            String accessToken = cucumberStore.tokenEmailMap.get(email);
+            response = 경로를_조회한다(sourceId, targetId, PathQuery.Type.DURATION, accessToken);
+        });
+
         When("{string}과 {string} 사이의 최단 시간 경로를 조회하면", (String source, String target) -> {
             Long sourceId = cucumberStore.stationIdMap.get(source);
             Long targetId = cucumberStore.stationIdMap.get(target);

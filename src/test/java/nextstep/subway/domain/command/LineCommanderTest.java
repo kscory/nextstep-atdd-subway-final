@@ -116,10 +116,10 @@ public class LineCommanderTest extends BaseTestSetup {
     class UpdateLineTest {
         @ParameterizedTest
         @AutoSource
-        public void sut_updates_line(String lineName, String color) {
+        public void sut_updates_line(String lineName, String color, Long additionalBasicFare) {
             // given
             Line line = lineDbUtil.insertLine(111L, 211L);
-            LineCommand.UpdateLine command = new LineCommand.UpdateLine(line.getId(), lineName, color);
+            LineCommand.UpdateLine command = new LineCommand.UpdateLine(line.getId(), lineName, color, additionalBasicFare);
 
             // when
             sut.updateLine(command);
@@ -128,6 +128,7 @@ public class LineCommanderTest extends BaseTestSetup {
             Line actual = lineRepository.findByIdOrThrow(command.getId());
             assertThat(actual.getName()).isEqualTo(command.getName());
             assertThat(actual.getColor()).isEqualTo(command.getColor());
+            assertThat(actual.getAdditionalBasicFare()).isEqualTo(command.getAdditionalBasicFare());
         }
 
         @ParameterizedTest

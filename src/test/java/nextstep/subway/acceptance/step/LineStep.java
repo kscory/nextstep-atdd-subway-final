@@ -10,23 +10,23 @@ import nextstep.subway.controller.dto.UpdateLineRequest;
 
 public class LineStep {
     public static ExtractableResponse<Response> 일호선을_생성한다(Long upStationId, Long downStationId, Long distance, Long duration) {
-        return 노선을_생성한다(new CreateLineRequest("1호선", "#0052A4", upStationId, downStationId, distance, duration));
+        return 노선을_생성한다(new CreateLineRequest("1호선", "#0052A4", upStationId, downStationId, distance, duration, 0L));
     }
 
     public static ExtractableResponse<Response> 이호선을_생성한다(Long upStationId, Long downStationId, Long distance, Long duration) {
-        return 노선을_생성한다(new CreateLineRequest("2호선", "#00A84D", upStationId, downStationId, distance, duration));
+        return 노선을_생성한다(new CreateLineRequest("2호선", "#00A84D", upStationId, downStationId, distance, duration, 0L));
     }
 
     public static ExtractableResponse<Response> 삼호선을_생성한다(Long upStationId, Long downStationId, Long distance, Long duration) {
-        return 노선을_생성한다(new CreateLineRequest("3호선", "#EF7C1C", upStationId, downStationId, distance, duration));
+        return 노선을_생성한다(new CreateLineRequest("3호선", "#EF7C1C", upStationId, downStationId, distance, duration, 0L));
     }
 
     public static ExtractableResponse<Response> 사호선을_생성한다(Long upStationId, Long downStationId, Long distance, Long duration) {
-        return 노선을_생성한다(new CreateLineRequest("4호선", "#00A4E3", upStationId, downStationId, distance, duration));
+        return 노선을_생성한다(new CreateLineRequest("4호선", "#00A4E3", upStationId, downStationId, distance, duration, 0L));
     }
 
     public static ExtractableResponse<Response> 분당선을_생성한다(Long upStationId, Long downStationId, Long distance, Long duration) {
-        return 노선을_생성한다(new CreateLineRequest("분당선", "#F5A200", upStationId, downStationId, distance, duration));
+        return 노선을_생성한다(new CreateLineRequest("분당선", "#F5A200", upStationId, downStationId, distance, duration, 0L));
     }
 
     public static ExtractableResponse<Response> 노선을_생성한다(CreateLineRequest request) {
@@ -57,8 +57,8 @@ public class LineStep {
                 .extract();
     }
 
-    public static ExtractableResponse<Response> 노선을_수정한다(Long id, String name, String color) {
-        UpdateLineRequest params = new UpdateLineRequest(name, color);
+    public static ExtractableResponse<Response> 노선을_수정한다(Long id, String name, String color, Long additionalBasicFare) {
+        UpdateLineRequest params = new UpdateLineRequest(name, color, additionalBasicFare);
         return RestAssured
                 .given().log().all()
                 .body(params)

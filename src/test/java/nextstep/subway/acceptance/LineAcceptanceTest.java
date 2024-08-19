@@ -119,7 +119,7 @@ public class LineAcceptanceTest extends BaseTestSetup {
         Long 노선_id = 노선_추출기.단일_id_를_추출한다(일호선_생성_응답값);
 
         // when
-        var 노선수정_응답값 = 노선을_수정한다(노선_id, "2호선", "#00A84D");
+        var 노선수정_응답값 = 노선을_수정한다(노선_id, "2호선", "#00A84D", 11L);
 
         // then
         응답_상태값이_올바른지_검증한다(노선수정_응답값, HttpStatus.OK.value());

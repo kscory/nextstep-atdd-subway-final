@@ -31,7 +31,7 @@ public class PathReaderTest extends BaseTestSetup {
     public void sut_throws_error_if_not_found_source_station() {
         // given
         Station targetStation = stationDbUtil.insertStations("선릉역").get(0);
-        PathQuery.Query query = new PathQuery.Query(22L, targetStation.getId(), PathQuery.Type.DISTANCE);
+        PathQuery.Query query = new PathQuery.Query(22L, targetStation.getId(), PathQuery.Type.DISTANCE, null);
 
 
         // when
@@ -45,7 +45,7 @@ public class PathReaderTest extends BaseTestSetup {
     public void sut_throws_error_if_not_found_target_station() {
         // given
         Station targetStation = stationDbUtil.insertStations("선릉역").get(0);
-        PathQuery.Query query = new PathQuery.Query(targetStation.getId(), 22L, PathQuery.Type.DISTANCE);
+        PathQuery.Query query = new PathQuery.Query(targetStation.getId(), 22L, PathQuery.Type.DISTANCE, null);
 
         // when
         SubwayDomainException actual = (SubwayDomainException) catchThrowable(() -> sut.findShortestPath(query));
@@ -61,7 +61,7 @@ public class PathReaderTest extends BaseTestSetup {
         Line line = lineDbUtil.insertLine(stations.get(0).getId(), stations.get(1).getId());
         lineDbUtil.insertSection(line, stations.get(1).getId(), stations.get(2).getId(), 10L, 20L);
         lineDbUtil.insertSection(line, stations.get(2).getId(), stations.get(3).getId(), 10L, 20L);
-        PathQuery.Query query = new PathQuery.Query(stations.get(0).getId(), stations.get(2).getId(), PathQuery.Type.DISTANCE);
+        PathQuery.Query query = new PathQuery.Query(stations.get(0).getId(), stations.get(2).getId(), PathQuery.Type.DISTANCE, 20);
 
         // when
         PathView.Main actual = sut.findShortestPath(query);
