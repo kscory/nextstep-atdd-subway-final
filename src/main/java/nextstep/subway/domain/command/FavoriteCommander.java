@@ -8,6 +8,8 @@ import nextstep.subway.domain.repository.FavoriteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class FavoriteCommander {
@@ -30,7 +32,7 @@ public class FavoriteCommander {
     }
 
     private void verifyPathExist(Long source, Long target) {
-        PathQuery.Query query = new PathQuery.Query(source, target, PathQuery.Type.DISTANCE, null);
+        PathQuery.Query query = new PathQuery.Query(source, target, PathQuery.Type.DISTANCE, Optional.empty());
         pathReader.findShortestPath(query);
     }
 }

@@ -26,17 +26,17 @@ public class PathReader {
 
     @Transactional(readOnly = true)
     public PathView.Main findShortestPath(PathQuery.Query query) {
-        Station sourceStation = stationRepository.findByIdOrThrow(query.source);
-        Station targetStation = stationRepository.findByIdOrThrow(query.target);
+        Station sourceStation = stationRepository.findByIdOrThrow(query.getSource());
+        Station targetStation = stationRepository.findByIdOrThrow(query.getTarget());
         List<Line> lines = lineRepository.findAll();
 
-        Path path = pathFinder.find(lines, sourceStation, targetStation, query.type);
+        Path path = pathFinder.find(lines, sourceStation, targetStation, query.getType());
 
         List<StationView.Main> stations = stationRepository.findAllById(path.getAllStationIds()).stream()
                 .map((station -> new StationView.Main(station.getId(), station.getName())))
                 .collect(Collectors.toList());
 
-        long fare = fareCalculator.getFare(path.totalDistance(), path.additionalBasicFare(), query.age);
+        long fare = fareCalculator.getFare(path.totalDistance(), path.additionalBasicFare(), query.getAge());
 
         return new PathView.Main(
                 stations,

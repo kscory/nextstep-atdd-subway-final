@@ -6,6 +6,7 @@ import nextstep.subway.domain.service.farecalculator.distancepolicy.DistanceFare
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,7 +14,7 @@ public class FareCalculator {
     private final List<DistanceFarePolicy> farePolicies;
     private final List<AgeDiscountPolicy> ageDiscountPolicies;
 
-    public long getFare(long totalDistance, long additionalBasicFare, Integer age) {
+    public long getFare(long totalDistance, long additionalBasicFare, Optional<Integer> age) {
         long totalBasicFare = getTotalBasicFare(totalDistance, additionalBasicFare);
 
         long totalDiscountFare = getTotalDiscountFare(age, totalBasicFare);
@@ -29,13 +30,13 @@ public class FareCalculator {
         return distanceBasicFare + additionalBasicFare;
     }
 
-    private long getTotalDiscountFare(Integer age, long totalBasicFare) {
-        if (age == null) {
+    private long getTotalDiscountFare(Optional<Integer> age, long totalBasicFare) {
+        if (age.isEmpty()) {
             return 0L;
         }
 
         return ageDiscountPolicies.stream()
-                .mapToLong((policy) -> policy.getDiscountFare(age, totalBasicFare))
+                .mapToLong((policy) -> policy.getDiscountFare(age.get(), totalBasicFare))
                 .sum();
     }
 }

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/paths")
 @RequiredArgsConstructor
@@ -26,7 +28,7 @@ public class PathController {
             @RequestParam PathQuery.Type type,
             @AuthenticationPrincipal(required = false) LoginMember loginMember
         ) {
-        Integer age = loginMember == null ? null : loginMember.getAge();
+        Optional<Integer> age = loginMember == null ? Optional.empty() : Optional.ofNullable(loginMember.getAge());
         PathQuery.Query query = new PathQuery.Query(source, target, type, age);
         return ResponseEntity.ok().body(pathReader.findShortestPath(query));
     }

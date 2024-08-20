@@ -5,6 +5,8 @@ import nextstep.util.BaseTestSetup;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FareCalculatorTest extends BaseTestSetup {
@@ -31,7 +33,7 @@ class FareCalculatorTest extends BaseTestSetup {
     })
     public void sut_returns_total_fare_if_additionalBasicFare_zero(long totalDistance, long expected) {
         // when
-        long actual = sut.getFare(totalDistance, 0L, null);
+        long actual = sut.getFare(totalDistance, 0L, Optional.empty());
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -46,7 +48,7 @@ class FareCalculatorTest extends BaseTestSetup {
     })
     public void sut_returns_total_fare_if_additionalBasicFare_existed(long totalDistance, long additionalBasicFare, long expected) {
         // when
-        long actual = sut.getFare(totalDistance, additionalBasicFare, null);
+        long actual = sut.getFare(totalDistance, additionalBasicFare, Optional.empty());
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -62,7 +64,7 @@ class FareCalculatorTest extends BaseTestSetup {
     })
     public void sut_returns_total_fare_if_age_existed(long totalDistance, int age, long expected) {
         // when
-        long actual = sut.getFare(totalDistance, 0L, age);
+        long actual = sut.getFare(totalDistance, 0L, Optional.of(age));
 
         // then
         assertThat(actual).isEqualTo(expected);
@@ -78,7 +80,7 @@ class FareCalculatorTest extends BaseTestSetup {
     })
     public void sut_returns_total_fare_if_all_existed(long totalDistance, long additionalBasicFare, int age, long expected) {
         // when
-        long actual = sut.getFare(totalDistance, additionalBasicFare, age);
+        long actual = sut.getFare(totalDistance, additionalBasicFare, Optional.of(age));
 
         // then
         assertThat(actual).isEqualTo(expected);

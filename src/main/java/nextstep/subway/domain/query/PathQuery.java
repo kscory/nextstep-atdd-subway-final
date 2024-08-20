@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Optional;
+
 public class PathQuery {
     public enum Type {
         DURATION, DISTANCE
@@ -14,9 +16,9 @@ public class PathQuery {
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Query {
-        Long source;
-        Long target;
-        Type type;
-        Integer age;
+        private Long source;
+        private Long target;
+        private Type type;
+        private Optional<Integer> age;
     }
 }
